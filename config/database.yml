@@ -16,7 +16,6 @@ test:
 
 production:
   <<: *default
-  adapter: sqlite
   database: blog_production
   username: blog
   password: <%= ENV['BLOG_DATABASE_PASSWORD'] %>
