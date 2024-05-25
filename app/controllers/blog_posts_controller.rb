@@ -1,8 +1,9 @@
 class BlogPostsController < ApplicationController
     before_action :authenticate_user! ,except: [:index ,:show ] 
-    before_action :set_blog_post ,except: [:index ,:create,:new ]
+    before_action :set_blog_post , except: [:index ,:create,:new ]
+    before_action :set_to_draft , only: [:update ,:create ]
     def index    
-        @blog_posts = BlogPost.all        
+        @blog_posts = user_signed_in? ? BlogPost.sorted : BlogPost.published.sorted        
     end
     def show
     end
@@ -30,11 +31,19 @@ class BlogPostsController < ApplicationController
             render :edit ,  status: :unprocessable_entity
         end
     end
+    def set_to_draft 
+        if params[:blog_post]["draft"] == "true"
+            for i in 1..5
+                params[:blog_post]["published_at(#{i}i)"] = ""
+            end
+        end
+        params[:blog_post].delete(:draft)
+    end
     def blog_post_params
-        params.require(:blog_post).permit(:title, :body)
+        params.require(:blog_post).permit(:title, :body ,:published_at ,:draft)
     end
     def set_blog_post 
-        @blog_post = BlogPost.find(params[:id]) 
+        @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id]) 
     rescue ActiveRecord::RecordNotFound 
         redirect_to root_path 
     end

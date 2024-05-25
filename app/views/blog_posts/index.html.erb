@@ -2,8 +2,15 @@
   <%= button_to "New Blog Post", new_blog_post_path, method: :get %>
 <% end %>
 <% @blog_posts.each do |blog_post| %>
-    <div class="bg-blue-500 text-white p-4">
-        <h1> <%= link_to blog_post.title , blog_post %></h1>
+  <% if blog_post.published? %>
+      <div class="bg-blue-200 text-black p-4 m-auto">
+  <% elsif blog_post.draft? %>
+      <div class="bg-gray-200 text-black p-4 m-auto">
+  <%else%>
+      <div class="bg-green-200 text-black p-4 m-auto">
+  <%end%>
+        <h1 class="text-center"><%= link_to blog_post.title , blog_post %></h1>
         <p><%= blog_post.body %></p>
+        <small><%= blog_post.published_at %></small>
     </div>
 <% end %>
