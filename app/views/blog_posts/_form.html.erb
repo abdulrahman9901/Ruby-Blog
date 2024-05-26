@@ -1,5 +1,6 @@
 
-<%= form_with model: @blog_post do |form| %>
+<%= form_with(model: @blog_post, local: true, html: { multipart: true }) do |form| %>
+<%# <%= form_with model: @blog_post do |form| %> 
 <div>
     <% if form.object.errors.any? %>
         <% form.object.errors.full_messages.each do |errMsg| %>
@@ -12,9 +13,10 @@
     <%= form.text_field :title%>
 </div>
 <div>
-    <%= form.label :body%>
-    <%= form.text_area :body%>
+    <%= form.label :content%>
+    <%= form.rich_text_area :content %>
 </div>
+
 <div>
     <%= form.label :published_at %>
     <%= form.datetime_select :published_at %>

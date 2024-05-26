@@ -3,7 +3,13 @@ class BlogPostsController < ApplicationController
     before_action :set_blog_post , except: [:index ,:create,:new ]
     before_action :set_to_draft , only: [:update ,:create ]
     def index    
-        @blog_posts = user_signed_in? ? BlogPost.sorted : BlogPost.published.sorted        
+        @blog_posts = user_signed_in? ? BlogPost.sorted : BlogPost.published.sorted 
+        @pagy, @blog_posts = pagy(@blog_posts)       
+
+    rescue Pagy::OverflowError 
+        redirect_to root_path(page: 1)
+
+
     end
     def show
     end
@@ -40,7 +46,7 @@ class BlogPostsController < ApplicationController
         params[:blog_post].delete(:draft)
     end
     def blog_post_params
-        params.require(:blog_post).permit(:title, :body ,:published_at ,:draft)
+        params.require(:blog_post).permit(:title,:content,:published_at,:draft)
     end
     def set_blog_post 
         @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id]) 

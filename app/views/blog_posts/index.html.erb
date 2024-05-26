@@ -10,7 +10,14 @@
       <div class="bg-green-200 text-black p-4 m-auto">
   <%end%>
         <h1 class="text-center"><%= link_to blog_post.title , blog_post %></h1>
-        <p><%= blog_post.body %></p>
+        <p><%= blog_post.content %></p>
         <small><%= blog_post.published_at %></small>
+    </div>
+<% end %>
+
+<% if @pagy.count > @pagy.items %>
+    <div  class="my-8">
+        <%== pagy_nav(@pagy) %>
+        <%== pagy_info(@pagy) %>
     </div>
 <% end %>

@@ -18,8 +18,13 @@ begin
       password_confirmation: "123456"
     )
     
+  100.times do |i|
+    blog_posts = BlogPost.where(title: "Blog Post #{i}").first_or_initialize
+    blog_posts.update(content:"Hello world! from post #{i}" ,published_at: Time.current)
+  end
     puts "User with email #{user_email} updated successfully."
   rescue ActiveRecord::RecordInvalid => e
     puts "Error updating user: #{e.message}"
+
   end
   
