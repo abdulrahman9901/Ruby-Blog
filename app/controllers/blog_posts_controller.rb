@@ -17,6 +17,7 @@ class BlogPostsController < ApplicationController
         @blog_post = BlogPost.new
     end
     def create 
+        Rails.logger.info("Blog post params: #{blog_post_params.inspect}")
         @blog_post = BlogPost.new(blog_post_params)
         if @blog_post.save
             redirect_to @blog_post
@@ -46,7 +47,7 @@ class BlogPostsController < ApplicationController
         params[:blog_post].delete(:draft)
     end
     def blog_post_params
-        params.require(:blog_post).permit(:title,:content,:published_at,:draft)
+        params.require(:blog_post).permit(:title,:content,:published_at,:draft,:cover_image)
     end
     def set_blog_post 
         @blog_post = user_signed_in? ? BlogPost.find(params[:id]) : BlogPost.published.find(params[:id]) 

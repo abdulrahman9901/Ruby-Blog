@@ -10,6 +10,7 @@
       <div class="bg-green-200 text-black p-4 m-auto">
   <%end%>
         <h1 class="text-center"><%= link_to blog_post.title , blog_post %></h1>
+        <%= image_tag(blog_post.cover_image) if blog_post.cover_image.present? %>
         <p><%= blog_post.content %></p>
         <small><%= blog_post.published_at %></small>
     </div>

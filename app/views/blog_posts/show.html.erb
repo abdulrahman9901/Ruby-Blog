@@ -1,5 +1,8 @@
 <div>
     <h1><%= @blog_post.title %></h1>
+    <% if @blog_post.cover_image.present? %>
+    <%= image_tag(@blog_post.cover_image) %>
+    <% end %>
     <p><%= @blog_post.content %></p>
     <%= button_to "Edit", edit_blog_post_path(@blog_post), method: :get if user_signed_in? %>
     <%= button_to "Home" , blog_posts_path  , method: :get  %>  

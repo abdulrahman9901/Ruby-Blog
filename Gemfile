@@ -71,3 +71,7 @@ gem "devise", "~> 4.9"
 gem "tailwindcss-rails", "~> 2.6"
 
 gem 'pagy', '~> 8.4' # omit patch digit
+
+gem 'ruby-vips', '~> 2.2', '>= 2.2.1'
+
+gem 'webpacker'

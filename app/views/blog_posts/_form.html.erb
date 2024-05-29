@@ -14,7 +14,17 @@
 </div>
 <div>
     <%= form.label :content%>
-    <%= form.rich_text_area :content %>
+    <%= form.rich_text_area :content , direct_upload: true %>
+</div>
+<div>
+    <% if blog_post.cover_image.present?%>
+        <div id="<%= dom_id(blog_post,:cover_image) %>"%>
+            <%= image_tag blog_post.cover_image, class:"w-1/2" %>
+            <%= link_to "Remove Cover Image",blog_post_cover_image_path(blog_post) , data: {turbo_method: :delete , turbo_confirm: "Are you Sure! " }%>
+        </div>
+    <%end%>
+    <%= form.label :cover_image%>
+    <%= form.file_field :cover_image , direct_upload: true %>
 </div>
 
 <div>

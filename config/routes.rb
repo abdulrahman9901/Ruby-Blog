@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   # delete "/blog_posts/:id" , to:"blog_posts#destroy"  
   # post "/blog_posts/create" , to:"blog_posts#create"  , as: :blog_posts
   resources :user_session
-  resources :blog_posts
+  resources :blog_posts do
+    resource :cover_image , only: [:destroy] ,module: :blog_posts
+  end
+
+  mount ActiveStorage::Engine => "/rails/active_storage"
+  
   root "blog_posts#index"
 end
